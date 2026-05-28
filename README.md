@@ -1,11 +1,11 @@
-# asdf-ticgit [![Build](https://github.com/asdf-vm/asdf-ticgit/actions/workflows/build.yml/badge.svg)](https://github.com/asdf-vm/asdf-ticgit/actions/workflows/build.yml) [![Lint](https://github.com/asdf-vm/asdf-ticgit/actions/workflows/lint.yml/badge.svg)](https://github.com/asdf-vm/asdf-ticgit/actions/workflows/lint.yml)
+# asdf-ticgit [![Build](https://github.com/bosmak/asdf-ticgit/actions/workflows/build.yml/badge.svg)](https://github.com/bosmak/asdf-ticgit/actions/workflows/build.yml) [![Lint](https://github.com/bosmak/asdf-ticgit/actions/workflows/lint.yml/badge.svg)](https://github.com/bosmak/asdf-ticgit/actions/workflows/lint.yml)
 
 [asdf-vm](https://asdf-vm.com) plugin for [ticgit](https://github.com/schacon/ticgit) — a Git-native distributed ticketing system.
 
 ## Install
 
 ```shell
-asdf plugin add ticgit https://github.com/asdf-vm/asdf-ticgit.git
+asdf plugin add ticgit https://github.com/bosmak/asdf-ticgit.git
 ```
 
 ## Usage
