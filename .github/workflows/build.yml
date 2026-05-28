@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: template setup test
+    name: asdf plugin test
     strategy:
       matrix:
         os:
@@ -18,30 +18,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Run Template Setup
-        run: |
-          git config user.name "Foo Bearer"
-          ./setup.bash \
-            "asdf-foo" \
-            "foo --help" \
-            "asdf-community" \
-            "ASDF Community" \
-            "https://github.com/asdf-vm/asdf" \
-            "https://asdf-vm.com" \
-            "Apache-2.0" \
-            "yes"
 
-      - name: Check setup result
+      - name: Setup asdf
+        uses: asdf-vm/actions/setup@v3
+
+      - name: Install asdf plugin
+        run: asdf plugin add ticgit "${{ github.workspace }}"
+
+      - name: List all versions
+        run: asdf list all ticgit
+
+      - name: Install latest ticgit
         run: |
-          set -xe
-          ls -la .
-          git log
-          test ! -d template/
-          grep "Apache" LICENSE
-          test "main" = "$(git rev-parse --abbrev-ref HEAD)"
-          ! git grep -F -e "<YOUR TOOL>" \
-                   --or -e "<TOOL HOMEPAGE>" \
-                   --or -e "<TOOL REPO>" \
-                   --or -e "<TOOL CHECK>" \
-                   --or -e "<YOUR NAME>" \
-                   --or -e"<YOUR GITHUB USERNAME>"
+          asdf install ticgit latest
+          asdf global ticgit latest
+
+      - name: Verify installation
+        run: ti --version

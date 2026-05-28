@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
+
+# shellcheck source=./lib/utils.bash
+source "${plugin_dir}/lib/utils.bash"
+
+mkdir -p "$ASDF_DOWNLOAD_PATH"
+
+platform=$(get_platform)
+
+case "$platform" in
+*windows*)
+	release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$ASDF_INSTALL_VERSION.zip"
+	;;
+*)
+	release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$ASDF_INSTALL_VERSION.tar.gz"
+	;;
+esac
+
+# Download the release archive
+download_release "$ASDF_INSTALL_VERSION" "$release_file"
+
+# Extract the archive into the download directory
+case "$platform" in
+*windows*)
+	unzip -q "$release_file" -d "$ASDF_DOWNLOAD_PATH" || fail "Could not extract $release_file"
+	;;
+*)
+	tar -xzf "$release_file" -C "$ASDF_DOWNLOAD_PATH" || fail "Could not extract $release_file"
+	;;
+esac
+
+# Remove the archive since we don't need to keep it
+rm "$release_file"
